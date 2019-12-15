@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    <changeSet author="root" id="1.1">
+        <createTable tableName="news">
+            <column name="id" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(64)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="MEDIUMTEXT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="root" id="1.2">
+        <createTable tableName="commentary">
+            <column name="id" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="message" type="VARCHAR(64)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_id" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="news_id" type="INT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="root" id="1.3">
+        <createTable tableName="user">
+            <column name="id" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="login" type="VARCHAR(64)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="password" type="VARCHAR(64)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="active" type="INT" defaultValue="1">
+                <constraints nullable="false"/>
+            </column>
+            <column name="role" type="VARCHAR(64)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="root" id="1.4">
+        <addPrimaryKey columnNames="id" constraintName="id_PK" tableName="news"/>
+        <addAutoIncrement columnDataType="int"
+                          columnName="id"
+                          incrementBy="1"
+                          startWith="1"
+                          tableName="news"/>
+    </changeSet>
+    <changeSet author="root" id="1.5">
+        <addPrimaryKey columnNames="id" constraintName="id_PK" tableName="commentary"/>
+        <addAutoIncrement columnDataType="int"
+                          columnName="id"
+                          incrementBy="1"
+                          startWith="1"
+                          tableName="commentary"/>
+    </changeSet>
+    <changeSet author="root" id="1.6">
+        <addPrimaryKey columnNames="id" constraintName="id_PK" tableName="user"/>
+        <addAutoIncrement columnDataType="int"
+                          columnName="id"
+                          incrementBy="1"
+                          startWith="1"
+                          tableName="user"/>
+    </changeSet>
+    <changeSet author="root" id="1.8">
+        <addColumn tableName="commentary">
+            <column name="date" type="date">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+</databaseChangeLog>
+

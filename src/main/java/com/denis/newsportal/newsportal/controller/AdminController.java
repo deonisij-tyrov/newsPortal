@@ -3,6 +3,7 @@ package com.denis.newsportal.newsportal.controller;
 import com.denis.newsportal.newsportal.dto.NewsDto;
 import com.denis.newsportal.newsportal.service.NewsService;
 import com.denis.newsportal.newsportal.service.UserService;
+import com.sun.javafx.binding.StringFormatter;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,27 +29,39 @@ public class AdminController {
     private NewsService newsService;
 
     @PostMapping("/updaterole")
-    public ResponseEntity createUser(@RequestParam final String userName, @RequestParam final String role) {
+    public ResponseEntity createUser(@RequestParam String userName, @RequestParam String role) {
         String updateRole = userService.updateRole(userName, role);
         return new ResponseEntity(updateRole, HttpStatus.OK);
     }
 
 
     @PostMapping("/createNews")
-    public String createNews(@RequestBody final NewsDto newsDto) {
+    public ResponseEntity createNews(@RequestBody NewsDto newsDto) {
         boolean admin = SecurityContextHolder
                 .getContext()
                 .getAuthentication().getCredentials().toString().contains("ADMIN");
-        return newsService.createNews(newsDto);
+        return new ResponseEntity(newsService.createNews(newsDto), HttpStatus.OK);
     }
 
     @DeleteMapping("/deleteNews")
-    public String deleteNews(@RequestBody final String newsName) {
-        return newsService.deleteNews(newsName);
+    public ResponseEntity deleteNews(@RequestBody String newsName) {
+        return new ResponseEntity(newsService.deleteNews(newsName), HttpStatus.OK);
     }
 
     @PostMapping("/updateNews")
-    public String updateNews(@RequestBody final NewsDto newsDto) {
-        return newsService.updateNews(newsDto);
+    public ResponseEntity updateNews(@RequestBody NewsDto newsDto) {
+        return new ResponseEntity(newsService.updateNews(newsDto), HttpStatus.OK);
+    }
+
+    @GetMapping("/enableUser")
+    public ResponseEntity enableUser(@RequestParam String userName) {
+        userService.setUserEnabledStatus(userName, true);
+        return new ResponseEntity(StringFormatter.format("User %s enabled", userName), HttpStatus.OK);
+    }
+
+    @GetMapping("/disableUser")
+    public ResponseEntity disableUser(@RequestParam String userName) {
+        userService.setUserEnabledStatus(userName, false);
+        return new ResponseEntity(StringFormatter.format("User %s disabled", userName), HttpStatus.OK);
     }
 }

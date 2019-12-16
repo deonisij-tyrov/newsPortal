@@ -65,4 +65,10 @@ public class UserService {
         }
 
     }
+
+    public void setUserEnabledStatus(String userName, boolean activ) {
+        User user = userRepository.findByLogin(userName);
+        user.setActive(activ);
+        userRepository.save(user);
+    }
 }

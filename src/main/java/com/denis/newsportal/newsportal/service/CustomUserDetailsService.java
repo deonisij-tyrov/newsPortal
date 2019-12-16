@@ -6,6 +6,7 @@ import java.util.Collection;
 import java.util.List;
 import javax.transaction.Transactional;
 import lombok.AllArgsConstructor;
+import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -25,6 +26,9 @@ public class CustomUserDetailsService implements UserDetailsService {
         final User user = userService.getUser(login);
         if (user == null) {
             throw new UsernameNotFoundException(login);
+        }
+        if (!user.isActive()) {
+            throw new DisabledException(login);
         }
         return new org.springframework.security.core.userdetails.User(
                 user.getLogin(), user.getPassword(), user.isActive(), true, true,

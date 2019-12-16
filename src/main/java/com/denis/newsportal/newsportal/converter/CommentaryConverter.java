@@ -22,6 +22,7 @@ public class CommentaryConverter implements DtoEntityConverter<CommentaryDto, Co
         commentaryDto.setAuthor(commentary.getAuthor().getLogin());
         commentaryDto.setDate(commentary.getDate());
         commentaryDto.setMessage(commentary.getMessage());
+        commentaryDto.setNews(commentary.getNews().getName());
         return commentaryDto;
     }
 

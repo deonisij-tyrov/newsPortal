@@ -24,11 +24,12 @@ public class UserService {
         this.userConverter = userConverter;
     }
 
-    public void registerUser(final UserDto userDto) {
+    public String registerUser(final UserDto userDto) {
         User user = userConverter.convertToDbo(userDto);
         user.setRole(UserRole.USER);
         user.setActive(true);
         userRepository.save(user);
+        return "Successfully registered";
     }
 
     public User getUser(String name) {

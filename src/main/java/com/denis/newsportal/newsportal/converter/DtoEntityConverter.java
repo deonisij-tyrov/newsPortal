@@ -1,7 +1,7 @@
 package com.denis.newsportal.newsportal.converter;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 public interface DtoEntityConverter<T, B> {
 
@@ -9,10 +9,10 @@ public interface DtoEntityConverter<T, B> {
 
     B convertToDbo(final T dto);
 
-    default Set<T> convertToDto(final Set<B> entitySet){
-        if (entitySet != null){
-            final Set<T> dtoSet = new HashSet<>();
-            for (final B entity : entitySet){
+    default List<T> convertToDto(final List<B> entitySet) {
+        if (entitySet != null) {
+            final List<T> dtoSet = new ArrayList<>();
+            for (final B entity : entitySet) {
                 final T dto = convertToDto(entity);
                 dtoSet.add(dto);
             }
@@ -21,10 +21,10 @@ public interface DtoEntityConverter<T, B> {
         return null;
     }
 
-    default Set<B> convertToDbo(final Set<T> dtoSet){
-        if (dtoSet != null){
-            final Set<B> entitySet = new HashSet<>();
-            for (final T dto : dtoSet){
+    default List<B> convertToDbo(final List<T> dtoSet) {
+        if (dtoSet != null) {
+            final List<B> entitySet = new ArrayList<>();
+            for (final T dto : dtoSet) {
                 final B entity = convertToDbo(dto);
                 entitySet.add(entity);
             }

@@ -1,6 +1,7 @@
 package com.denis.newsportal.newsportal.controller;
 
 import com.denis.newsportal.newsportal.dto.CommentaryCreateDto;
+import com.denis.newsportal.newsportal.dto.CommentaryDto;
 import com.denis.newsportal.newsportal.dto.NewsDto;
 import com.denis.newsportal.newsportal.dto.UserDto;
 import com.denis.newsportal.newsportal.service.CommentaryService;
@@ -37,8 +38,8 @@ public class UserController {
 
     @PostMapping("/register")
     public ResponseEntity createUser(@RequestBody final UserDto userDto) {
-        userService.registerUser(userDto);
-        return new ResponseEntity("Successfully registered", HttpStatus.OK);
+        String result = userService.registerUser(userDto);
+        return new ResponseEntity(result, HttpStatus.OK);
     }
 
     @GetMapping("/getusers")
@@ -52,7 +53,7 @@ public class UserController {
     }
 
     @GetMapping("/getNews")
-    public ResponseEntity getAllUsers(@RequestParam int page, @RequestParam int pageSize) {
+    public ResponseEntity getPageNews(@RequestParam int page, @RequestParam int pageSize) {
         final List<NewsDto> userDtoList = newsService.getNews(page, pageSize);
         if (userDtoList != null) {
             return new ResponseEntity(userDtoList, HttpStatus.FOUND);
@@ -65,5 +66,11 @@ public class UserController {
     public ResponseEntity addComment(@RequestBody CommentaryCreateDto commentaryReadDto) {
         String resultSting = commentaryService.addComment(commentaryReadDto);
         return new ResponseEntity(resultSting, HttpStatus.CREATED);
+    }
+
+    @GetMapping("/getCommentsForNews")
+    public ResponseEntity getCommentsForNews(@RequestParam String newsName) {
+        List<CommentaryDto> commentsForNews = commentaryService.getCommentsForNews(newsName);
+        return new ResponseEntity(commentsForNews, HttpStatus.FOUND);
     }
 }

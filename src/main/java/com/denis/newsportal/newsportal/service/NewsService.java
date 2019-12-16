@@ -9,7 +9,6 @@ import com.denis.newsportal.newsportal.repository.NewsRepository;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -66,8 +65,8 @@ public class NewsService {
 
     public List<NewsDto> getNews(int page, int pageSize) {
         Page<News> news = newsRepository.findAll(PageRequest.of(page, pageSize));
-        List<NewsDto> newsDtoList= new ArrayList<>();
-        news.get().forEach(n-> newsDtoList.add(newsConverter.convertToDto(n)));
+        List<NewsDto> newsDtoList = new ArrayList<>();
+        news.get().forEach(n -> newsDtoList.add(newsConverter.convertToDto(n)));
         return newsDtoList;
     }
 }

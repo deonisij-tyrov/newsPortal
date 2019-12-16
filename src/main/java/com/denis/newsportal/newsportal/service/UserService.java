@@ -55,7 +55,7 @@ public class UserService {
             if (user != null) {
                 user.setRole(userRole);
                 userRepository.save(user);
-                return "updated";
+                return "Updated";
             } else {
                 return "User not found";
             }

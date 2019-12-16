@@ -5,7 +5,9 @@ import com.denis.newsportal.newsportal.entity.Commentary;
 import com.denis.newsportal.newsportal.repository.NewsRepository;
 import com.denis.newsportal.newsportal.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class CommentaryConverter implements DtoEntityConverter<CommentaryDto, Commentary> {
 
     @Autowired
@@ -30,6 +32,6 @@ public class CommentaryConverter implements DtoEntityConverter<CommentaryDto, Co
         commentary.setDate(commentaryDto.getDate());
         commentary.setMessage(commentaryDto.getMessage());
         commentary.setNews(newsRepository.findByName(commentaryDto.getNews()));
-        return null;
+        return commentary;
     }
 }
